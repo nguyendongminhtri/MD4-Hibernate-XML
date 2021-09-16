@@ -32,12 +32,16 @@ public class ControllerDemo {
 
     @PostMapping("/create/customer")
     public String createCustomer(@ModelAttribute("customerForm") Customer customer, Model model) {
-//        List<Customer> customerList = customerService1.findAll();
+        List<Customer> customerList = customerService1.findAll();
 //        int id = customerList.size() + 1;
 //        String name = customer.getName();
 //        String address = customer.getAddress();
 
 
+//Long id = Long.valueOf(customerList.size()+1);
+
+//Customer customer1 = new Customer(id,customer.getName());
+//        System.out.println("customer1 = "+customer1);
             customerService1.persist(customer);
             return "redirect:/customers";
 

@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Service;
 
 
 import javax.persistence.EntityManager;
@@ -30,11 +31,37 @@ public class CustomerService1 {
             e.printStackTrace();
         }
     }
-    public void persist(final Customer customer) {
-        entityManager.persist(customer);
+    List<Customer> customerList = findAll();
+    public Customer persist(Customer customer) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+//            Customer origin = findOne(customer.getId());
+//            origin.setName(customer.getName());
+//            origin.setEmail(customer.getEmail());
+//            origin.setAddress(customer.getAddress());
+            session.saveOrUpdate(customer);
+            transaction.commit();
+            return customer;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return null;
     }
-    public Customer findById(final int id) {
-        return entityManager.find(Customer.class, id);
+    public Customer findById(Long id) {
+        String queryStr = "SELECT c FROM Customer AS c WHERE c.id = :id";
+        TypedQuery<Customer> query = entityManager.createQuery(queryStr, Customer.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
     public void delete(final Customer customer) {
         entityManager.remove(customer);

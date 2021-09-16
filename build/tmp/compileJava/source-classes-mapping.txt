@@ -1,7 +1,7 @@
-chinh/anh/model/Customer.java
- chinh.anh.model.Customer
 chinh/anh/config/AppConfig.java
  chinh.anh.config.AppConfig
+chinh/anh/model/Customer.java
+ chinh.anh.model.Customer
 chinh/anh/config/WebConfig1.java
  chinh.anh.config.WebConfig1
 chinh/anh/controller/ControllerDemo.java
